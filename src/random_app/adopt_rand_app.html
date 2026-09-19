@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../output.css" rel="stylesheet">
+  <title> Adopt Random App </title>
+</head>
+
+
+
+<body class="bg-[#FFF9E9] relative">
+  <!-- ตกแต่งด้านบน ล่าง -->
+  <div class="h-[15vh] w-full bg-[#ff0000] absolute z-0 left-0 bg-[url('img/BG-image.png')] bg-repeat-x bg-bottom bg-auto">
+  </div>
+
+  <div class="bottom-0 h-[15vh] w-full bg-[#ff0000] absolute z-0 left-0 bg-[url('img/BG-image.png')] bg-repeat-x bg-bottom bg-auto">
+  </div>
+
+
+ <!-- body -->
+  <div class="flex min-h-screen items-center justify-center relative z-10">
+    <div class = "w-[70vh] h-[95vh] flex items-center flex-col gap-0">
+
+        <div class = "w-[100%] h-[10vh] flex justify-center items-center gap-4">
+            <button class=" w-[40%] bg-[#EE988A] text-center p-4 rounded-2xl text-[#FFFBC3] cursor-pointer hover:scale-110 transition" onclick="" data-source="random.html">สู่มตัวละครใหม่</button>
+            <button class=" w-[40%] bg-[#EE988A] text-center p-4 rounded-2xl text-[#FFFBC3] cursor-pointer hover:scale-110 transition" onclick="" data-source="saved.html">ตัวละครที่บันทึก</button>
+        </div>
+
+        <!-- Partial div -->
+        <div class="w-[100%] h-[80%] flex flex-col items-center" data-container="content">
+            <!-- this zone can change page followed by button above -->
+
+       
+        <!-- end of partial zone -->
+        </div>
+        <!-- end of partial div -->
+
+
+      </div>
+  </div>
+  
+
+</body>
+
+ <script>
+
+
+          const container = document.querySelector('[data-container="content"]');
+
+          async function loadPage(source) {
+            const response = await fetch(source);
+            const html = await response.text();
+
+            container.innerHTML = html;
+          }
+
+          loadPage("random.html");
+
+          document.addEventListener("click", (event) => {
+            const button = event.target.closest("[data-source]");
+
+            if(!button) return;
+
+            const source = button.dataset.source;
+            loadPage(source);
+          });
+
+
+        </script>    
+
+</html>
