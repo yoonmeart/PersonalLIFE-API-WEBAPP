@@ -1,5 +1,5 @@
 import {
-    generateRandomCharacter, getCurrentCharacter
+    generateRandomCharacter, getCurrentCharacter, saveCurrentCharacter
 } from "../../randomData.js"
 import {
     loadPage
@@ -27,6 +27,7 @@ export function init() {
     });
 
     sentButton.addEventListener("click", () => {
+        saveCurrentCharacter();
         loadPage("saved");
     })
 }

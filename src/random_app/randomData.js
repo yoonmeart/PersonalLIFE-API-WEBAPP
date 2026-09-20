@@ -401,6 +401,7 @@ export function randomFromList(list) {
 }
 
 const currentCharacter = [];
+const savedList = [];
 
 export function generateRandomCharacter() {
     const list = randomFromList(all_lists);
@@ -412,6 +413,18 @@ export function getCurrentCharacter() {
     return currentCharacter;
 }
 
+export function saveCurrentCharacter() {
+    savedList.push([...currentCharacter]);
+    currentCharacter.length = 0;
+}
+
+
+export function getSavedList() {
+    return savedList;
+}
+
+
 export function clearCurrentCharacter() {
     currentCharacter.length = 0;
 }
+
