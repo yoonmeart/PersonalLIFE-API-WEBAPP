@@ -6,8 +6,7 @@
   <link href="../output.css" rel="stylesheet">
   <title> Adopt Random App </title>
 </head>
-
-
+<script type="module" src="./app.js"></script>
 
 <body class="bg-[#FFF9E9] relative">
   <!-- ตกแต่งด้านบน ล่าง -->
@@ -23,12 +22,12 @@
     <div class = "w-[70vh] h-[95vh] flex items-center flex-col gap-0">
 
         <div class = "w-[100%] h-[10vh] flex justify-center items-center gap-4">
-            <button class=" w-[40%] bg-[#EE988A] text-center p-4 rounded-2xl text-[#FFFBC3] cursor-pointer hover:scale-110 transition" onclick="" data-source="random.html">สู่มตัวละครใหม่</button>
-            <button class=" w-[40%] bg-[#EE988A] text-center p-4 rounded-2xl text-[#FFFBC3] cursor-pointer hover:scale-110 transition" onclick="" data-source="saved.html">ตัวละครที่บันทึก</button>
+            <button class=" w-[40%] bg-[#EE988A] text-center p-4 rounded-2xl text-[#FFFBC3] cursor-pointer hover:scale-110 transition" data-page="random">สู่มตัวละครใหม่</button>
+            <button class=" w-[40%] bg-[#EE988A] text-center p-4 rounded-2xl text-[#FFFBC3] cursor-pointer hover:scale-110 transition" data-page="saved">ตัวละครที่บันทึก</button>
         </div>
 
         <!-- Partial div -->
-        <div class="w-[100%] h-[80%] flex flex-col items-center" data-container="content">
+        <div class="w-[100%] h-[80%] flex flex-col items-center" id="app">
             <!-- this zone can change page followed by button above -->
 
        
@@ -41,52 +40,6 @@
   </div>
   
 
-</body>
-<script src="random.js"></script>
-<script>
-
-
-          const container = document.querySelector('[data-container="content"]');
-
-          let currentPage = "";
-
-          async function loadPage(source) {
-            const response = await fetch(source);
-            const html = await response.text();
-
-           container.innerHTML = html;
-
-           currentPage = source;
-           
-           initRandomPage(currentPage);
-           console.log("current is .. ",currentPage);
-
-           if(source === "random.html"){
-            current_rand_list.length = 0;
-           }
-           if(source === "continue_rand.html"){
-             initSentButton();
-           }
-            if(source === "saved.html"){
-              console.log("calling showsaved");
-              ShowSaved();
-            }
-          
-
-          }
-
-          loadPage("random.html");
-
-          document.addEventListener("click", (event) => {
-            const button = event.target.closest("[data-source]");
-
-            if(!button) return;
-
-            const source = button.dataset.source;
-            loadPage(source);
-          });
-
-
-        </script>    
+</body> 
 
 </html>
