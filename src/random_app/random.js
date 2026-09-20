@@ -407,18 +407,63 @@ function rand_list (list,current_list) {
     current_list.push(choose);
 }
 
-const buttons = document.querySelectorAll('[data-rand]');
+function initRandomPage(currentPage) {
+    console.log("INIT RANDOM PAGE =", currentPage);
+    const button = document.querySelector("[data-rand]");
 
-buttons.forEach(button => {
-              button.addEventListener("click", async () => {
+        console.log("BUTTON =", button);
+
+    if(!button) {
+        console.log("NO BUTTON FOUND!");
+        return;
+    }
+
+    console.log("BUTTON FOUND!");
+
+    button.addEventListener("click", async () => {
+                console.log("DATA-RAND CLICKED!");
 
                 const random_list = all_lists[Math.floor(Math.random() * all_lists.length)];
                 rand_list(random_list, current_rand_list);
 
-                const result = document.querySelector("#result");
-                result.textContent = current_rand_list;
-                console.log(current_rand_list);
+                // const result = document.querySelector("#result");
+                // result.textContent = current_rand_list;
+
+                if (currentPage === "random.html"){
+                    await loadPage("continue_rand.html");
+
+                    const result = document.querySelector("#result");
+                    result.textContent = current_rand_list;
+                    initSentButton()
+                }
+                if (currentPage === "continue_rand.html") {
+                    const result = document.querySelector("#result");
+                    result.textContent = current_rand_list;
+                    initSentButton()
+                }
+                
               });
-          });
+    
+}
+
+const saved_list = [];
+
+
+function initSentButton() {
+    const button = document.querySelector("#sent_button");
+    if(!button) {
+        console.log("NO SENT BUTTON FOUND!");
+        return;
+    }
+    button.addEventListener("click", () => {
+        saved_list.push(rand_list)
+    });
+}
+
+function ShowSaved() {
+    const result = document.querySelector("#saved_result");
+
+}
+
 
 
