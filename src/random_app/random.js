@@ -411,7 +411,7 @@ function initRandomPage(currentPage) {
     console.log("INIT RANDOM PAGE =", currentPage);
     const button = document.querySelector("[data-rand]");
 
-        console.log("BUTTON =", button);
+        // console.log("BUTTON =", button);
 
     if(!button) {
         console.log("NO BUTTON FOUND!");
@@ -434,12 +434,11 @@ function initRandomPage(currentPage) {
 
                     const result = document.querySelector("#result");
                     result.textContent = current_rand_list;
-                    initSentButton()
                 }
                 if (currentPage === "continue_rand.html") {
                     const result = document.querySelector("#result");
                     result.textContent = current_rand_list;
-                    initSentButton()
+
                 }
                 
               });
@@ -455,14 +454,35 @@ function initSentButton() {
         console.log("NO SENT BUTTON FOUND!");
         return;
     }
+    console.log("SetButton : ",button);
+
     button.addEventListener("click", () => {
-        saved_list.push(rand_list)
+        saved_list.push([...current_rand_list]);
+        loadPage("saved.html");
     });
 }
 
 function ShowSaved() {
     const result = document.querySelector("#saved_result");
+    if(!result)return
+    console.log("saved_area is : ", result);   
+    
+    console.log("saved_list is ",saved_list);
 
+    saved_list.forEach(text => {
+            result.innerHTML += `
+            <button class=" w-[90%] bg-[#FFFBC3] text-center p-4 rounded-2xl text-[#EE988A] border mt-4 flex cursor-pointer hover:scale-105 transition">
+            <div class="font-bold">
+            <h1> ${text}</h1>
+            </div>  
+            </button>
+            `;
+            
+    });
+
+    
+   
+       
 }
 
 

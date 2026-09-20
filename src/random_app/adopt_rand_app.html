@@ -61,9 +61,17 @@
            initRandomPage(currentPage);
            console.log("current is .. ",currentPage);
 
+           if(source === "random.html"){
+            current_rand_list.length = 0;
+           }
+           if(source === "continue_rand.html"){
+             initSentButton();
+           }
             if(source === "saved.html"){
-              
+              console.log("calling showsaved");
+              ShowSaved();
             }
+          
 
           }
 
