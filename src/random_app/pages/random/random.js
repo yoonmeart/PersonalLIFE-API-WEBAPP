@@ -1,5 +1,5 @@
 import {
-    generateRandomCharacter
+    generateRandomCharacter ,clearCurrentCharacter
 } from "../../randomData.js"
 import {
     loadPage
@@ -8,7 +8,7 @@ import {
 
 
 export function init() {
-    console.log("random init!");
+    clearCurrentCharacter();
     const randomButton = document.querySelector("[data-rand]");
 
     randomButton.addEventListener("click", () => {

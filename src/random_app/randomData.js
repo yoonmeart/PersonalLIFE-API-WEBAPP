@@ -400,15 +400,12 @@ export function randomFromList(list) {
     return list[index];
 }
 
-let currentCharacter = null;
+const currentCharacter = [];
 
 export function generateRandomCharacter() {
-    const character = [];
-    for (const list of all_lists) {
-        const result = randomFromList(list);
-        character.push(result);
-    }
-    currentCharacter = character;
+    const list = randomFromList(all_lists);
+    const result = randomFromList(list);
+    currentCharacter.push(result);
 }
 
 export function getCurrentCharacter() {
