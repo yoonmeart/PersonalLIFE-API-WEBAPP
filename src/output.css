@@ -210,12 +210,6 @@
   .table {
     display: table;
   }
-  .h-80 {
-    height: calc(var(--spacing) * 80);
-  }
-  .h-160 {
-    height: calc(var(--spacing) * 160);
-  }
   .h-\[10\%\] {
     height: 10%;
   }
@@ -228,29 +222,35 @@
   .h-\[50vh\] {
     height: 50vh;
   }
-  .h-\[60vh\] {
-    height: 60vh;
-  }
   .h-\[80\%\] {
     height: 80%;
   }
   .h-\[80vh\] {
     height: 80vh;
   }
-  .h-\[89\%\] {
-    height: 89%;
-  }
   .h-\[95vh\] {
     height: 95vh;
   }
-  .min-h-20 {
-    min-height: calc(var(--spacing) * 20);
+  .h-\[100vh\] {
+    height: 100vh;
+  }
+  .h-\[160vh\] {
+    height: 160vh;
+  }
+  .h-\[180vh\] {
+    height: 180vh;
   }
   .min-h-screen {
     min-height: 100vh;
   }
   .w-\[40\%\] {
     width: 40%;
+  }
+  .w-\[60\%\] {
+    width: 60%;
+  }
+  .w-\[70\%\] {
+    width: 70%;
   }
   .w-\[70vh\] {
     width: 70vh;
@@ -287,6 +287,9 @@
   }
   .gap-0 {
     gap: 0px;
+  }
+  .gap-3 {
+    gap: calc(var(--spacing) * 3);
   }
   .gap-4 {
     gap: calc(var(--spacing) * 4);
@@ -346,9 +349,6 @@
   }
   .text-\[20px\] {
     font-size: 20px;
-  }
-  .text-\[40px\] {
-    font-size: 40px;
   }
   .text-\[70px\] {
     font-size: 70px;
