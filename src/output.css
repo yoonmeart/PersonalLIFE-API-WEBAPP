@@ -207,6 +207,15 @@
   .flex {
     display: flex;
   }
+  .table {
+    display: table;
+  }
+  .h-80 {
+    height: calc(var(--spacing) * 80);
+  }
+  .h-160 {
+    height: calc(var(--spacing) * 160);
+  }
   .h-\[10\%\] {
     height: 10%;
   }
@@ -219,11 +228,23 @@
   .h-\[50vh\] {
     height: 50vh;
   }
+  .h-\[60vh\] {
+    height: 60vh;
+  }
   .h-\[80\%\] {
     height: 80%;
   }
+  .h-\[80vh\] {
+    height: 80vh;
+  }
+  .h-\[89\%\] {
+    height: 89%;
+  }
   .h-\[95vh\] {
     height: 95vh;
+  }
+  .min-h-20 {
+    min-height: calc(var(--spacing) * 20);
   }
   .min-h-screen {
     min-height: 100vh;
@@ -234,6 +255,9 @@
   .w-\[70vh\] {
     width: 70vh;
   }
+  .w-\[80\%\] {
+    width: 80%;
+  }
   .w-\[90\%\] {
     width: 90%;
   }
@@ -243,8 +267,14 @@
   .w-full {
     width: 100%;
   }
+  .border-collapse {
+    border-collapse: collapse;
+  }
   .cursor-pointer {
     cursor: pointer;
+  }
+  .resize {
+    resize: both;
   }
   .flex-col {
     flex-direction: column;
@@ -260,6 +290,9 @@
   }
   .gap-4 {
     gap: calc(var(--spacing) * 4);
+  }
+  .overflow-y-auto {
+    overflow-y: auto;
   }
   .rounded-2xl {
     border-radius: var(--radius-2xl);
@@ -311,6 +344,9 @@
     font-size: var(--text-xl);
     line-height: var(--tw-leading, var(--text-xl--line-height));
   }
+  .text-\[20px\] {
+    font-size: 20px;
+  }
   .text-\[40px\] {
     font-size: 40px;
   }
@@ -324,11 +360,21 @@
     --tw-font-weight: var(--font-weight-bold);
     font-weight: var(--font-weight-bold);
   }
+  .break-words {
+    overflow-wrap: break-word;
+  }
   .text-\[\#EE988A\] {
     color: #EE988A;
   }
   .text-\[\#FFFBC3\] {
     color: #FFFBC3;
+  }
+  .underline {
+    text-decoration-line: underline;
+  }
+  .outline {
+    outline-style: var(--tw-outline-style);
+    outline-width: 1px;
   }
   .transition {
     transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events;
@@ -374,6 +420,11 @@ body {
   syntax: "*";
   inherits: false;
 }
+@property --tw-outline-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
 @property --tw-scale-x {
   syntax: "*";
   inherits: false;
@@ -394,6 +445,7 @@ body {
     *, ::before, ::after, ::backdrop {
       --tw-border-style: solid;
       --tw-font-weight: initial;
+      --tw-outline-style: solid;
       --tw-scale-x: 1;
       --tw-scale-y: 1;
       --tw-scale-z: 1;
