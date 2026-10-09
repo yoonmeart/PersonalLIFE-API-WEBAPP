@@ -1,3 +1,4 @@
+
 @import "tailwindcss";
 
 @font-face {
@@ -9,4 +10,25 @@
 
 body {
     font-family: "Puimek", sans-serif;
+}
+
+/* ปรับพฤติกรรมการแตะบนอุปกรณ์สัมผัส */
+button,
+a,
+[role="button"] {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* ปิดการเลือกข้อความโดยไม่ตั้งใจขณะกดรัว */
+button {
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* ให้เอฟเฟกต์ hover ทำงานเฉพาะอุปกรณ์ที่รองรับ hover */
+@media (hover: hover) and (pointer: fine) {
+    button:hover {
+        /* เอฟเฟกต์ hover จาก Tailwind ยังคงใช้ได้ */
+    }
 }
