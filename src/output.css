@@ -377,6 +377,9 @@
   .text-center {
     text-align: center;
   }
+  .text-left {
+    text-align: left;
+  }
   .text-sm {
     font-size: var(--text-sm);
     line-height: var(--tw-leading, var(--text-sm--line-height));
@@ -400,6 +403,9 @@
   }
   .break-words {
     overflow-wrap: break-word;
+  }
+  .whitespace-pre-line {
+    white-space: pre-line;
   }
   .text-\[\#EE988A\] {
     color: #EE988A;

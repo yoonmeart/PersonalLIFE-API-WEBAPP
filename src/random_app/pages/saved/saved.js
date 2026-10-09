@@ -16,6 +16,48 @@ export function init() {
 
     renderSavedCharacters();
 
+    // จัดรูปแบบตัวละคร โดยรวมข้อมูลที่มีหัวข้อเดียวกัน
+    function formatCharacter(character) {
+        if (!Array.isArray(character) || character.length === 0) {
+            return "ไม่มีข้อมูลตัวละคร";
+        }
+
+        const groupedCharacter = {};
+
+        character.forEach((item) => {
+            // ป้องกันกรณีข้อมูลไม่ใช่ String
+            if (typeof item !== "string") {
+                return;
+            }
+
+            // แยกชื่อหัวข้อและรายละเอียดด้วยเครื่องหมาย :
+            const separatorIndex = item.indexOf(":");
+
+            if (separatorIndex === -1) {
+                if (!groupedCharacter["ข้อมูลเพิ่มเติม"]) {
+                    groupedCharacter["ข้อมูลเพิ่มเติม"] = [];
+                }
+
+                groupedCharacter["ข้อมูลเพิ่มเติม"].push(item);
+                return;
+            }
+
+            const title = item.slice(0, separatorIndex).trim();
+            const value = item.slice(separatorIndex + 1).trim();
+
+            if (!groupedCharacter[title]) {
+                groupedCharacter[title] = [];
+            }
+
+            groupedCharacter[title].push(value);
+        });
+
+        // รวมรายละเอียดของแต่ละหัวข้อ แล้วแยกหัวข้อด้วยบรรทัดใหม่
+        return Object.entries(groupedCharacter)
+            .map(([title, values]) => `${title}: ${values.join(", ")}`)
+            .join("\n");
+    }
+
     // แสดงรายการตัวละครทั้งหมด
     function renderSavedCharacters() {
         console.log("[Saved] กำลังโหลดรายการตัวละคร");
@@ -36,15 +78,16 @@ export function init() {
 
             card.type = "button";
             card.className =
-                "w-[90%] bg-[#FFFBC3] text-center p-4 rounded-2xl " +
+                "w-[90%] bg-[#FFFBC3] text-left p-4 rounded-2xl " +
                 "text-[#EE988A] border mt-4 flex cursor-pointer " +
                 "hover:scale-105 transition";
 
             card.dataset.characterId = character.id;
 
             const title = document.createElement("h1");
-            title.className = "font-bold";
-            title.textContent = character.data.join(" / ");
+
+            title.className = "font-bold whitespace-pre-line";
+            title.textContent = formatCharacter(character.data);
 
             card.appendChild(title);
             result.appendChild(card);
