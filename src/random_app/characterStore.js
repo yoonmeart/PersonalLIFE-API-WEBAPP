@@ -54,6 +54,7 @@ export function saveCharacter(character) {
 }
 
 // ลบตัวละครด้วย ID
+
 export function deleteCharacter(id) {
     const savedCharacters = getSavedCharacters();
 
@@ -61,12 +62,16 @@ export function deleteCharacter(id) {
         character => character.id !== id
     );
 
+    if (updatedCharacters.length === savedCharacters.length) {
+        return false;
+    }
+
     localStorage.setItem(
         STORAGE_KEY,
         JSON.stringify(updatedCharacters)
     );
 
-    return updatedCharacters.length !== savedCharacters.length;
+    return true;
 }
 
 // ลบตัวละครที่บันทึกไว้ทั้งหมด
