@@ -1,5 +1,10 @@
 
-import { getAllRecords, createFuelRecord } from "../../../services.js";
+import {
+    getAllRecords,
+    getLatestOdometer,
+    getLatestValidOdometer,
+    createFuelRecord,
+} from "../../../services.js";
 
 import {
     calculateDistance,
@@ -53,10 +58,23 @@ function getOdometer(record) {
     return Number.isFinite(value) ? value : NaN;
 }
 
-async function getPreviousOdometer(records) {
-    // อ่านเลขไมล์จากรายการสุดท้ายใน Sheet ก่อน
-    for (let index = records.length - 1; index >= 0; index -= 1) {
-        const odometer = getOdometer(records[index]);
+async function getPreviousOdometer(valueOrRecords) {
+    // รองรับทั้งกรณีได้รับค่าเลขไมล์ล่าสุดตรงจาก API และกรณีได้รับ array สำหรับข้อมูลเดิม
+    if (
+        typeof valueOrRecords === "number" ||
+        typeof valueOrRecords === "string"
+    ) {
+        const odometer = toNumber(valueOrRecords);
+
+        return Number.isFinite(odometer) && odometer >= 0 ? odometer : null;
+    }
+
+    if (!Array.isArray(valueOrRecords)) {
+        return null;
+    }
+
+    for (let index = valueOrRecords.length - 1; index >= 0; index -= 1) {
+        const odometer = getOdometer(valueOrRecords[index]);
 
         if (Number.isFinite(odometer) && odometer >= 0) {
             return odometer;
@@ -92,20 +110,33 @@ export function init() {
             : "text-sm text-[#99512F]";
     }
 
+    
     function calculatePreview() {
         const currentOdometer = toNumber(currentOdometerInput.value);
-        const liters = toNumber(litersInput.value);
+        let liters = toNumber(litersInput.value);
         const totalPrice = toNumber(totalPriceInput.value);
 
+        // ต้องมีเลขไมล์ครั้งก่อนก่อนจึงคำนวณได้
         if (
             previousOdometer === null ||
             !Number.isFinite(currentOdometer) ||
-            !Number.isFinite(liters) ||
+            currentOdometer <= previousOdometer ||
             !Number.isFinite(totalPrice) ||
-            currentOdometer < previousOdometer ||
-            liters <= 0 ||
             totalPrice <= 0
         ) {
+            setText("#preview-distance", "-");
+            setText("#preview-price-per-liter", "-");
+            setText("#preview-expected-distance", "-");
+            return null;
+        }
+
+        // ถ้าไม่ได้กรอกจำนวนลิตร ให้คำนวณจากยอดเงิน
+        // และราคาน้ำมันต่อลิตรที่กำหนดไว้
+        const DEFAULT_PRICE_PER_LITER = 32.69;
+
+        if (litersInput.value.trim() === "") {
+            liters = totalPrice / DEFAULT_PRICE_PER_LITER;
+        } else if (!Number.isFinite(liters) || liters <= 0) {
             setText("#preview-distance", "-");
             setText("#preview-price-per-liter", "-");
             setText("#preview-expected-distance", "-");
@@ -147,13 +178,34 @@ export function init() {
 
     async function loadPreviousOdometer() {
         try {
-            const records = await getAllRecords();
+            let records = null;
+            let cachedLatestOdometer = null;
 
-            if (!Array.isArray(records)) {
-                throw new Error("รูปแบบข้อมูลจาก API ไม่ถูกต้อง");
+            try {
+                records = await getAllRecords();
+                cachedLatestOdometer = getLatestValidOdometer(records);
+            } catch (error) {
+                console.warn(
+                    "[AddRecord] ใช้ cache ไม่ได้ ตรวจสอบ fallback API:",
+                    error
+                );
             }
 
-            previousOdometer = await getPreviousOdometer(records);
+            if (cachedLatestOdometer !== null) {
+                previousOdometer = cachedLatestOdometer;
+            } else {
+                const latestOdometerResponse = await getLatestOdometer();
+                const latestOdometer =
+                    latestOdometerResponse &&
+                    Object.prototype.hasOwnProperty.call(
+                        latestOdometerResponse,
+                        "เลขไมล์ปัจจุบัน"
+                    )
+                        ? latestOdometerResponse["เลขไมล์ปัจจุบัน"]
+                        : null;
+
+                previousOdometer = await getPreviousOdometer(latestOdometer);
+            }
 
             if (previousOdometer === null) {
                 setText(

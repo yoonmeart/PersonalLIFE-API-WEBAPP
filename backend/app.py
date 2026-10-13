@@ -2,7 +2,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
-from services import get_all_records, create_record
+from services import get_all_records, create_record, get_latest_odometer
 
 app = Flask(__name__)
 
@@ -24,6 +24,18 @@ def records():
         app.logger.exception("Failed to read Google Sheets")
         return jsonify({
             "error": "Unable to read Google Sheets"
+        }), 500
+
+
+@app.get("/api/records/latest")
+def latest_record():
+    try:
+        data = get_latest_odometer()
+        return jsonify(data)
+    except Exception:
+        app.logger.exception("Failed to read latest odometer from Google Sheets")
+        return jsonify({
+            "error": "Unable to read latest odometer"
         }), 500
 
 
