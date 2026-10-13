@@ -25,3 +25,24 @@ export async function checkAPIHealth() {
 
     return await response.json();
 }
+
+
+export async function createFuelRecord(record) {
+    const response = await fetch(`${API_BASE_URL}/api/records`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(record),
+    });
+
+    if (!response.ok) {
+        const message = await response.text();
+
+        throw new Error(
+            `Failed to save fuel record: HTTP ${response.status} ${message}`
+        );
+    }
+
+    return await response.json();
+}

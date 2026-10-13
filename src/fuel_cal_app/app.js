@@ -2,10 +2,16 @@
 const app = document.querySelector("#app");
 
 
+
 const pages = {
     dashboard: {
         html: "./pages/dashboard/dashboard.html",
         init: () => import("./pages/dashboard/dashboard.js")
+    },
+
+    addrecord: {
+        html: "./pages/dashboard/addrecord/addrecord.html",
+        init: () => import("./pages/dashboard/addrecord/addrecord.js")
     },
 
     history: {

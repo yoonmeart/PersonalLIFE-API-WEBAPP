@@ -46,3 +46,29 @@ def get_all_values():
     """อ่านข้อมูลทุกแถว รวมถึงหัวตาราง"""
     worksheet = get_worksheet()
     return worksheet.get_all_values()
+
+
+def create_record(record):
+    """เพิ่มรายการเติมน้ำมันลง Google Sheets"""
+    worksheet = get_worksheet()
+
+    # เรียงข้อมูลให้ตรงกับคอลัมน์ A-J
+    row = [
+        record["วันที่"],
+        record["ประเภทเชื้อเพลิง"],
+        record["รุ่นรถ"],
+        record["เลขไมล์ปัจจุบัน"],
+        record["เลขไมล์ครั้งก่อน"],
+        record["ระยะทาง"],
+        record["จำนวนลิตร"],
+        record["ราคาน้ำมันต่อลิตร"],
+        record["ราคารวม"],
+        record["ระยะทางที่คาดหวัง"],
+    ]
+
+    worksheet.append_row(
+        row,
+        value_input_option="USER_ENTERED",
+    )
+
+    return {"status": "success"}
