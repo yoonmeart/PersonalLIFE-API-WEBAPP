@@ -6,60 +6,82 @@
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
-  />
+   />
 
     <link href="./output.css" rel="stylesheet">
 
     <title>Personal Life API</title>
 </head>
-<body class="bg-[#FFF9E9] relative">
-  <!-- ตกแต่งด้านบน ล่าง -->
-  <div class="h-[15vh] w-full absolute z-0 left-0 bg-[url('img/BG-image.png')] bg-repeat-x bg-bottom bg-auto">
-  </div>
+<body class="relative bg-[#FFF9E9]">
+ <div class="absolute left-0 top-0 z-0 h-[15vh] w-full bg-[url('img/BG-image.png')] bg-repeat-x bg-bottom bg-auto"></div>
+ <div class="absolute bottom-0 left-0 z-0 h-[15vh] w-full bg-[url('img/BG-image.png')] bg-repeat-x bg-bottom bg-auto"></div>
 
-  <div class="bottom-0 h-[15vh] w-full absolute z-0 left-0 bg-[url('img/BG-image.png')] bg-repeat-x bg-bottom bg-auto">
-  </div>
+ <div class="relative z-10 flex min-h-screen items-center justify-center">
+   <div class="flex h-[50vh] w-[70vh] flex-col items-center gap-4">
+     <img src="img/menu_logo.png" alt="menu_logo" class="mb-0" />
 
+     <button class="flex h-[10%] w-[40%] cursor-pointer items-center justify-center rounded-2xl bg-[#FFFBC3] p-6 text-xl font-bold text-[#EE988A] transition hover:scale-110" onclick="window.location.href='fuel_cal_app/fuel_cal_app.html'">
+       น้ำมัน
+     </button>
 
- <!-- body -->
-  <div class="flex min-h-screen items-center justify-center relative z-10">
-    <div class = "w-[70vh] h-[50vh] flex items-center flex-col gap-4">
+     <button class="under-development-btn flex h-[10%] w-[40%] cursor-pointer items-center justify-center rounded-2xl bg-[#FFFBC3] p-6 text-xl font-bold text-[#EE988A] transition hover:scale-110" data-message="กำลังพัฒนา...">
+       สุ่มอาหาร
+     </button>
 
-        <img src="img/menu_logo.png", alt="menu_logo" class="mb-0">
+     <button class="under-development-btn flex h-[10%] w-[40%] cursor-pointer items-center justify-center rounded-2xl bg-[#FFFBC3] p-6 text-xl font-bold text-[#EE988A] transition hover:scale-110" data-message="กำลังพัฒนา...">
+       ไปไหนดี
+     </button>
 
-        <button class="p-6 w-[40%] h-[10%] flex items-center justify-center rounded-2xl
-        text-xl text-[#EE988A] bg-[#FFFBC3] font-bold cursor-pointer
-        hover:scale-110 transition" onclick="window.location.href='fuel_cal_app/fuel_cal_app.html'">
-         น้ำมัน
-        </button>
+     <button class="flex h-[10%] w-[40%] cursor-pointer items-center justify-center rounded-2xl bg-[#FFFBC3] p-6 text-xl font-bold text-[#EE988A] transition hover:scale-110" onclick="window.location.href='random_app/adopt_rand_app.html'">
+       สุ่มตีมอดอป
+     </button>
 
-        <button class="p-6 w-[40%] h-[10%] flex items-center justify-center rounded-2xl
-        text-xl text-[#EE988A] bg-[#FFFBC3] font-bold cursor-pointer
-        hover:scale-110 transition" onclick="">
-         สุ่มอาหาร
-        </button>
+     <button class="under-development-btn flex h-[10%] w-[40%] cursor-pointer items-center justify-center rounded-2xl bg-[#FFFBC3] p-6 text-xl font-bold text-[#EE988A] transition hover:scale-110" data-message="กำลังพัฒนา...">
+       สิ่งที่ต้องทำ
+     </button>
+   </div>
+ </div>
 
-        <button class="p-6 w-[40%] h-[10%] flex items-center justify-center rounded-2xl
-        text-xl text-[#EE988A] bg-[#FFFBC3] font-bold cursor-pointer
-        hover:scale-110 transition" onclick="">
-        ไปไหนดี
-        </button>
+ <div id="main-menu-notification" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-[1px]">
+   <div class="w-[90%] max-w-sm rounded-[28px] border border-[#EE988A]/40 bg-[#FFFBC3] px-6 py-7 text-center shadow-[0_12px_30px_rgba(238,152,138,0.28)]">
+     <div class="mb-4 flex items-center justify-center">
+       <div class="flex h-12 w-12 items-center justify-center rounded-full bg-[#FFF9E9] text-2xl text-[#EE988A]">⚙️</div>
+     </div>
+     <p id="main-menu-notification-text" class="text-xl font-bold text-[#99512F]">กำลังพัฒนา...</p>
+     <button id="main-menu-notification-close" class="mt-5 rounded-full bg-[#EE988A] px-5 py-2 text-sm font-bold text-[#FFFBC3] transition hover:opacity-90">
+       ปิด
+     </button>
+   </div>
+ </div>
 
-        <button class="p-6 w-[40%] h-[10%] flex items-center justify-center rounded-2xl
-        text-xl text-[#EE988A] bg-[#FFFBC3] font-bold cursor-pointer
-        hover:scale-110 transition" onclick="window.location.href='random_app/adopt_rand_app.html'">
-        สุ่มตีมอดอป
-        </button>
+ <script>
+   const notificationOverlay = document.getElementById('main-menu-notification');
+   const notificationText = document.getElementById('main-menu-notification-text');
+   const closeButton = document.getElementById('main-menu-notification-close');
 
-        <button class="p-6 w-[40%] h-[10%] flex items-center justify-center rounded-2xl
-        text-xl text-[#EE988A] bg-[#FFFBC3] font-bold cursor-pointer
-        hover:scale-110 transition" onclick="">
-        สิ่งที่ต้องทำ
-        </button>
-        
-      </div>
-  </div>
-  
+   function showUnderDevelopmentNotice(message) {
+     notificationText.textContent = message;
+     notificationOverlay.classList.remove('hidden');
+     notificationOverlay.classList.add('flex');
+   }
 
+   closeButton.addEventListener('click', () => {
+     notificationOverlay.classList.add('hidden');
+     notificationOverlay.classList.remove('flex');
+   });
+
+   notificationOverlay.addEventListener('click', (event) => {
+     if (event.target === notificationOverlay) {
+       notificationOverlay.classList.add('hidden');
+       notificationOverlay.classList.remove('flex');
+     }
+   });
+
+   document.querySelectorAll('.under-development-btn').forEach((button) => {
+     button.addEventListener('click', () => {
+       showUnderDevelopmentNotice(button.dataset.message || 'กำลังพัฒนา...');
+     });
+   });
+ </script>
 </body>
 </html>
