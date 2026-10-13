@@ -1,90 +1,117 @@
 
 <div class="w-full h-full overflow-y-auto px-3 py-2 mt-10 text-[#99512F]">
 
-    <!-- Efficiency Chart -->
-    <section class="w-full rounded-2xl border border-[#F5D77A] bg-[#FFFDF3] p-3">
+    <!-- Statistics Summary -->
+    <section class="grid grid-cols-2 gap-3">
 
-        <h2 class="mb-2 text-xs text-[#C88A58]">
-            อัตราสิ้นเปลืองตามช่วงเวลา
-        </h2>
-
-        <!-- Chart Area -->
-        <div
-            id="efficiency-chart"
-            class="flex h-[96px] items-end justify-around gap-2 pt-2"
-        >
-
-            <!-- Bar 1 -->
-            <div class="flex h-full min-w-0 flex-1 flex-col items-center justify-end">
-                <span class="mb-1 text-[9px]">11.7</span>
-
-                <div class="flex h-[6px] w-full items-end">
-                    <div class="h-full w-full rounded-t-full bg-[#FFE58A]"></div>
-                </div>
-
-                <span class="mt-1 text-[9px] text-[#C88A58]">09-15</span>
-            </div>
-
-            <!-- Bar 2 -->
-            <div class="flex h-full min-w-0 flex-1 flex-col items-center justify-end">
-                <span class="mb-1 text-[9px]">12.0</span>
-
-                <div class="flex h-[6px] w-full items-end">
-                    <div class="h-full w-full rounded-t-full bg-[#FFE58A]"></div>
-                </div>
-
-                <span class="mt-1 text-[9px] text-[#C88A58]">09-01</span>
-            </div>
-
-            <!-- Bar 3 -->
-            <div class="flex h-full min-w-0 flex-1 flex-col items-center justify-end">
-                <span class="mb-1 text-[9px]">11.8</span>
-
-                <div class="flex h-[6px] w-full items-end">
-                    <div class="h-full w-full rounded-t-full bg-[#FFE58A]"></div>
-                </div>
-
-                <span class="mt-1 text-[9px] text-[#C88A58]">08-18</span>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- Statistics Cards -->
-    <section class="mt-3 grid grid-cols-2 gap-2">
-
-        <!-- Best Efficiency -->
-        <div class="flex min-h-[70px] flex-col items-center justify-center rounded-2xl border border-[#F5D77A] bg-[#FFFDF3] p-2 text-center">
-            <p class="text-sm font-bold">12.0 กม./ลิตร</p>
-            <p class="mt-1 text-[11px] text-[#C88A58]">
-                อัตราสิ้นเปลืองดีที่สุด
-            </p>
+        
+        <!-- Typical Efficiency: Median -->
+        <div class="rounded-2xl border border-[#F5D77A] bg-[#FFFDF3] p-3">
+            <p class="text-xs text-[#C88A58]">อัตราสิ้นเปลืองปกติ (Median)</p>
+            <p id="best-efficiency" class="mt-2 text-xl font-bold">-</p>
+            <p class="text-[11px] text-[#C88A58]">กม./ลิตร</p>
         </div>
 
-        <!-- Worst Efficiency -->
-        <div class="flex min-h-[70px] flex-col items-center justify-center rounded-2xl border border-[#F5D77A] bg-[#FFFDF3] p-2 text-center">
-            <p class="text-sm font-bold">11.7 กม./ลิตร</p>
-            <p class="mt-1 text-[11px] text-[#C88A58]">
-                อัตราสิ้นเปลืองต่ำที่สุด
-            </p>
+        <!-- Normal Efficiency Range: Q1-Q3 -->
+        <div class="rounded-2xl border border-[#F5D77A] bg-[#FFFDF3] p-3">
+            <p class="text-xs text-[#C88A58]">ช่วงอัตราสิ้นเปลืองทั่วไป</p>
+            <p id="worst-efficiency" class="mt-2 text-xl font-bold">-</p>
+            <p class="text-[11px] text-[#C88A58]">Q1 – Q3 (กม./ลิตร)</p>
         </div>
 
-        <!-- Average Price -->
-        <div class="flex min-h-[70px] flex-col items-center justify-center rounded-2xl border border-[#F5D77A] bg-[#FFFDF3] p-2 text-center">
-            <p class="text-sm font-bold">฿35.0</p>
-            <p class="mt-1 text-[11px] text-[#C88A58]">
-                ราคาเฉลี่ยต่อลิตร
-            </p>
+        <!-- Average Fuel Price -->
+        <div class="rounded-2xl border border-[#F5D77A] bg-[#FFFDF3] p-3">
+            <p class="text-xs text-[#C88A58]">ราคาเฉลี่ยต่อลิตร</p>
+            <p id="average-price" class="mt-2 text-xl font-bold">-</p>
+            <p class="text-[11px] text-[#C88A58]">บาท/ลิตร</p>
         </div>
 
         <!-- Total Distance -->
-        <div class="flex min-h-[70px] flex-col items-center justify-center rounded-2xl border border-[#F5D77A] bg-[#FFFDF3] p-2 text-center">
-            <p class="text-sm font-bold">1,347 กม.</p>
-            <p class="mt-1 text-[11px] text-[#C88A58]">
-                ระยะทางรวม
+        <div class="rounded-2xl border border-[#F5D77A] bg-[#FFFDF3] p-3">
+            <p class="text-xs text-[#C88A58]">ระยะทางรวม</p>
+            <p id="total-distance" class="mt-2 text-xl font-bold">-</p>
+            <p class="text-[11px] text-[#C88A58]">กิโลเมตร</p>
+        </div>
+
+    </section>
+
+    <!-- Fuel Efficiency Chart -->
+    <section class="mt-4 rounded-2xl border border-[#F5D77A] bg-[#FFFDF3] p-3">
+
+        <h2 class="text-sm font-bold">อัตราสิ้นเปลืองน้ำมัน</h2>
+
+        <p class="mt-1 text-[11px] text-[#C88A58]">
+            แสดงผลจากรายการเติมน้ำมันล่าสุดไม่เกิน 7 รายการ
+        </p>
+
+        <div
+            id="efficiency-chart"
+            class="mt-4 flex min-h-40 items-end justify-around gap-2"
+            aria-live="polite"
+        >
+            <p class="w-full self-center py-4 text-center text-sm text-[#C88A58]">
+                กำลังโหลดข้อมูล...
             </p>
         </div>
+
+    </section>
+
+    <!-- Statistical Analysis -->
+    <section class="mt-4 rounded-2xl border border-[#F5D77A] bg-[#FFFDF3] p-3">
+
+        <h2 class="text-sm font-bold">วิเคราะห์ข้อมูลทางสถิติ</h2>
+
+        <div class="mt-3 space-y-3 text-sm">
+
+            <!-- Median -->
+            <div class="flex items-start justify-between gap-3">
+                <span class="text-[#C88A58]">Median (กม./ลิตร)</span>
+                <span id="median-efficiency" class="text-right font-bold">-</span>
+            </div>
+
+            <!-- Quartiles -->
+            <div class="flex items-start justify-between gap-3">
+                <span class="text-[#C88A58]">Q1 / Q3</span>
+                <span id="quartiles" class="text-right font-bold">-</span>
+            </div>
+
+            <!-- IQR Bounds -->
+            <div class="flex items-start justify-between gap-3">
+                <span class="text-[#C88A58]">ขอบเขต IQR</span>
+                <span id="iqr-bounds" class="text-right font-bold">-</span>
+            </div>
+
+            <!-- Confidence Interval -->
+            <div class="flex items-start justify-between gap-3">
+                <span class="text-[#C88A58]">95% CI ของค่าเฉลี่ย</span>
+                <span id="efficiency-ci" class="max-w-[60%] text-right font-bold">-</span>
+            </div>
+
+            <!-- Outlier Count -->
+            <div class="flex items-start justify-between gap-3">
+                <span class="text-[#C88A58]">จำนวนรายการที่น่าสงสัย</span>
+                <span id="outlier-count" class="text-right font-bold">-</span>
+            </div>
+
+        </div>
+
+        <!-- Analysis Explanation -->
+        <p
+            id="statistics-note"
+            class="mt-3 text-xs leading-relaxed text-[#C88A58]"
+            aria-live="polite"
+        >
+            กำลังวิเคราะห์ข้อมูล...
+        </p>
+
+        <!-- Outlier Details -->
+        <div
+            id="outlier-list"
+            class="mt-3 space-y-2"
+            aria-live="polite"
+        ></div>
 
     </section>
 
 </div>
+

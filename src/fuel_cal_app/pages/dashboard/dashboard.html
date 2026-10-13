@@ -1,8 +1,12 @@
 
-<div class="w-full h-full overflow-y-auto px-4 py-2 mt-10 text-[#99512F]">
-
+<div
+    data-dashboard
+    class="w-full h-full overflow-y-auto px-4 py-2 mt-10 text-[#99512F]"
+>
     <!-- สรุปข้อมูลล่าสุด -->
-    <section class="w-full rounded-2xl border border-[#F5D77A] bg-[#FFFDF3] p-3">
+    <section
+        class="w-full rounded-2xl border border-[#F5D77A] bg-[#FFFDF3] p-3"
+    >
         <h2 class="mb-3 text-xs text-[#C88A58]">
             สรุปข้อมูลล่าสุด
         </h2>
@@ -10,39 +14,60 @@
         <div class="grid grid-cols-3 gap-2">
 
             <!-- อัตราสิ้นเปลืองเฉลี่ย -->
-            <div class="flex min-w-0 flex-col items-center justify-center rounded-2xl border border-[#F5D77A] bg-[#FFF8C9] px-1 py-3 text-center">
-                <p class="text-base font-bold leading-5">
-                    11.8
+            <div
+                class="flex min-w-0 flex-col items-center justify-center rounded-2xl border border-[#F5D77A] bg-[#FFF8C9] px-1 py-3 text-center"
+            >
+                <p
+                    id="average-efficiency"
+                    class="text-base font-bold leading-5"
+                >
+                    -
                 </p>
+
                 <p class="mt-1 text-[11px]">
                     กม./ลิตร
                 </p>
+
                 <p class="text-[11px] text-[#C88A58]">
                     อัตราสิ้นเปลืองเฉลี่ย
                 </p>
             </div>
 
-            <!-- ค่าใช้จ่ายทั้งหมด -->
-            <div class="flex min-w-0 flex-col items-center justify-center rounded-2xl border border-[#F5D77A] bg-[#FFF8C9] px-1 py-3 text-center">
-                <p class="text-base font-bold leading-5">
-                    ฿3,980
+            <!-- ค่าใช้จ่ายทั้งหมดของเดือนนี้ -->
+            <div
+                class="flex min-w-0 flex-col items-center justify-center rounded-2xl border border-[#F5D77A] bg-[#FFF8C9] px-1 py-3 text-center"
+            >
+                <p
+                    id="monthly-expense"
+                    class="text-base font-bold leading-5"
+                >
+                    -
                 </p>
+
                 <p class="mt-1 text-[11px]">
                     เดือนนี้
                 </p>
+
                 <p class="text-[11px] text-[#C88A58]">
                     ค่าใช้จ่ายทั้งหมด
                 </p>
             </div>
 
             <!-- จำนวนครั้งที่เติมน้ำมัน -->
-            <div class="flex min-w-0 flex-col items-center justify-center rounded-2xl border border-[#F5D77A] bg-[#FFF8C9] px-1 py-3 text-center">
-                <p class="text-base font-bold leading-5">
-                    3
+            <div
+                class="flex min-w-0 flex-col items-center justify-center rounded-2xl border border-[#F5D77A] bg-[#FFF8C9] px-1 py-3 text-center"
+            >
+                <p
+                    id="record-count"
+                    class="text-base font-bold leading-5"
+                >
+                    -
                 </p>
+
                 <p class="mt-1 text-[11px]">
                     ครั้ง
                 </p>
+
                 <p class="text-[11px] text-[#C88A58]">
                     จำนวนรายการ
                 </p>
@@ -54,7 +79,7 @@
     <!-- ปุ่มเพิ่มรายการเติมน้ำมัน -->
     <button
         type="button"
-        class="mt-3 flex w-full items-center justify-center gap-2 rounded-full border border-[#F5D77A] bg-[#FFF8C9] px-4 py-3 text-sm text-[#99512F] transition hover:bg-[#FFF1A8] active:scale-[0.98] cursor-pointer hover:scale-110"
+        class="mt-3 flex w-full items-center justify-center gap-2 rounded-full border border-[#F5D77A] bg-[#FFF8C9] px-4 py-3 text-sm text-[#99512F] transition hover:bg-[#FFF1A8] active:scale-[0.98] cursor-pointer "
         data-action="add-fuel"
     >
         <span class="text-base">+</span>
@@ -68,60 +93,16 @@
             รายการเติมน้ำมันล่าสุด
         </h2>
 
-        <div class="flex flex-col gap-2">
-
-            <!-- รายการที่ 1 -->
-            <button
-                type="button"
-                class="w-full rounded-2xl border border-[#F5D77A] bg-[#FFFDF3] px-3 py-2 text-left transition hover:bg-[#FFF8D9] active:scale-[0.99] "
-                data-record-id="record-1"
-            >
-                <div class="flex items-center justify-between gap-3">
-                    <span class="text-sm">2026-09-15</span>
-                    <span class="text-sm font-bold">฿1,230</span>
-                </div>
-
-                <div class="flex items-center justify-between gap-2 text-[11px] text-[#C88A58]">
-                    <span>35.2 ลิตร · 412 กม.</span>
-                    <span class="text-right">11.7 กม./ลิตร · 2.99 บาท/กม.</span>
-                </div>
-            </button>
-
-            <!-- รายการที่ 2 -->
-            <button
-                type="button"
-                class="w-full rounded-2xl border border-[#F5D77A] bg-[#FFFDF3] px-3 py-2 text-left transition hover:bg-[#FFF8D9] active:scale-[0.99]"
-                data-record-id="record-2"
-            >
-                <div class="flex items-center justify-between gap-3">
-                    <span class="text-sm">2026-09-01</span>
-                    <span class="text-sm font-bold">฿1,403</span>
-                </div>
-
-                <div class="flex items-center justify-between gap-2 text-[11px] text-[#C88A58]">
-                    <span>40.1 ลิตร · 480 กม.</span>
-                    <span class="text-right">12.0 กม./ลิตร · 2.92 บาท/กม.</span>
-                </div>
-            </button>
-
-             <!-- รายการที่ 3 -->
-            <button
-                type="button"
-                class="w-full rounded-2xl border border-[#F5D77A] bg-[#FFFDF3] px-3 py-2 text-left transition hover:bg-[#FFF8D9] active:scale-[0.99]"
-                data-record-id="record-2"
-            >
-                <div class="flex items-center justify-between gap-3">
-                    <span class="text-sm">2026-09-01</span>
-                    <span class="text-sm font-bold">฿1,403</span>
-                </div>
-
-                <div class="flex items-center justify-between gap-2 text-[11px] text-[#C88A58]">
-                    <span>40.1 ลิตร · 480 กม.</span>
-                    <span class="text-right">12.0 กม./ลิตร · 2.92 บาท/กม.</span>
-                </div>
-            </button>
-
+        <!-- dashboard.js จะสร้างรายการจาก API ภายในส่วนนี้ -->
+        <div
+            id="recent-fuel-records"
+            class="flex flex-col gap-2"
+        >
+            <p class="text-xs text-[#C88A58]">
+                กำลังโหลดข้อมูล...
+            </p>
         </div>
+
     </section>
 
     <!-- ดูประวัติทั้งหมด -->
@@ -134,3 +115,4 @@
     </button>
 
 </div>
+
