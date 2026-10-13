@@ -1,5 +1,13 @@
 //app.js
-import { getAllRecords, refreshRecords } from "./services.js";
+import {
+    getAllRecords,
+    getRecordCacheState,
+    refreshRecords,
+} from "./services.js";
+import {
+    hideLoading,
+    withLoading,
+} from "./loading.js";
 
 const app = document.querySelector("#app");
 
@@ -25,10 +33,15 @@ const pages = {
     }
 };
 
+const initialRecordLoad = (async () => {
+    const cacheState = getRecordCacheState();
 
-//loading page
+    if (cacheState.records) {
+        return cacheState.records;
+    }
 
-const initialRecordLoad = getAllRecords();
+    return withLoading(getAllRecords(), "กำลังโหลดข้อมูล...");
+})();
 
 export async function loadPage(pageName) {
     const page = pages[pageName];
@@ -38,7 +51,13 @@ export async function loadPage(pageName) {
         return;
     }
 
-    await initialRecordLoad;
+    try {
+        await initialRecordLoad;
+    } finally {
+        if (getRecordCacheState().records) {
+            hideLoading();
+        }
+    }
 
     const response = await fetch(page.html);
     const html = await response.text();
