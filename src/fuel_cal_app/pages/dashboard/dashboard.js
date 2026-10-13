@@ -4,16 +4,16 @@ import { getAllRecords } from "../../services.js";
 export function init() {
     console.log("[Dashboard] init!");
 
-    const addFuelButton = document.querySelector(
-        '[data-action="add-fuel"]'
-    );
+    // const addFuelButton = document.querySelector(
+    //     '[data-action="add-fuel"]'
+    // );
 
-    if (addFuelButton) {
-        addFuelButton.addEventListener("click", () => {
-            console.log("[Dashboard] กด Add Fuel Record");
-            // TODO: เปิดหน้า/Modal สำหรับเพิ่มข้อมูล
-        });
-    }
+    // if (addFuelButton) {
+    //     addFuelButton.addEventListener("click", () => {
+    //         console.log("[Dashboard] กด Add Fuel Record");
+    //         // TODO: เปิดหน้า/Modal สำหรับเพิ่มข้อมูล
+    //     });
+    // }
 
     // Event Delegation สำหรับรายการที่สร้างด้วย JavaScript
     const recordsContainer = document.querySelector(

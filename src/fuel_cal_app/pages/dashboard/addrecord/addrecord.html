@@ -1,0 +1,107 @@
+
+<div data-addrecord class="w-full h-full overflow-y-auto px-4 py-2 mt-10 text-[#99512F]">
+    <section class="rounded-2xl border border-[#F5D77A] bg-[#FFFDF3] p-4">
+        <h2 class="mb-1 text-base font-bold">เพิ่มรายการเติมน้ำมัน</h2>
+        <p class="mb-4 text-xs text-[#C88A58]">
+            กรอกข้อมูลจากการเติมน้ำมันครั้งล่าสุด
+        </p>
+
+        <form id="addrecord-form" class="flex flex-col gap-4">
+            <div>
+                <label for="current-odometer" class="mb-1 block text-sm">
+                    1. เลขไมล์ปัจจุบัน (km)
+                </label>
+                <input
+                    id="current-odometer"
+                    name="currentOdometer"
+                    type="number"
+                    min="0"
+                    step="1"
+                    required
+                    inputmode="numeric"
+                    placeholder="เช่น 13046"
+                    class="w-full rounded-xl border border-[#F5D77A] bg-white px-3 py-3 text-base outline-none focus:border-[#EE988A]"
+                />
+                <p id="previous-odometer" class="mt-1 text-xs text-[#C88A58]">
+                    กำลังโหลดเลขไมล์ครั้งก่อน...
+                </p>
+            </div>
+
+            <div>
+                <label for="fuel-liters" class="mb-1 block text-sm">
+                    2. จำนวนลิตร (L)
+                </label>
+                <input
+                    id="fuel-liters"
+                    name="liters"
+                    type="number"
+                    min="0.01"
+                    step="0.01"
+                    required
+                    inputmode="decimal"
+                    placeholder="เช่น 22.31"
+                    class="w-full rounded-xl border border-[#F5D77A] bg-white px-3 py-3 text-base outline-none focus:border-[#EE988A]"
+                />
+            </div>
+
+            <div>
+                <label for="total-price" class="mb-1 block text-sm">
+                    3. ยอดเงินที่เติม (บาท)
+                </label>
+                <input
+                    id="total-price"
+                    name="totalPrice"
+                    type="number"
+                    min="0.01"
+                    step="0.01"
+                    required
+                    inputmode="decimal"
+                    placeholder="เช่น 800"
+                    class="w-full rounded-xl border border-[#F5D77A] bg-white px-3 py-3 text-base outline-none focus:border-[#EE988A]"
+                />
+            </div>
+
+            <div class="rounded-2xl border border-[#F5D77A] bg-[#FFF8C9] p-3">
+                <h3 class="mb-3 text-sm font-bold">สรุปก่อนบันทึก</h3>
+
+                <div class="flex justify-between gap-3 py-1 text-sm">
+                    <span>ระยะทางที่ขับ</span>
+                    <span id="preview-distance">-</span>
+                </div>
+
+                <div class="flex justify-between gap-3 py-1 text-sm">
+                    <span>ราคาต่อลิตร</span>
+                    <span id="preview-price-per-liter">-</span>
+                </div>
+
+                <div class="flex justify-between gap-3 py-1 text-sm">
+                    <span>ระยะทางคาดหวัง</span>
+                    <span id="preview-expected-distance">-</span>
+                </div>
+            </div>
+
+            <p
+                id="addrecord-message"
+                role="status"
+                aria-live="polite"
+                class="text-sm"
+            ></p>
+
+            <button
+                id="save-fuel-record"
+                type="submit"
+                class="w-full rounded-full border border-[#F5D77A] bg-[#FFF8C9] px-4 py-3 text-sm font-bold transition hover:bg-[#FFF1A8] active:scale-[0.98]"
+            >
+                บันทึกรายการ
+            </button>
+
+            <button
+                type="button"
+                data-page="dashboard"
+                class="w-full py-2 text-sm text-[#C88A58]"
+            >
+                ยกเลิก
+            </button>
+        </form>
+    </section>
+</div>
