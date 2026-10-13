@@ -1,6 +1,8 @@
 
 import {
+    getAllRecords,
     getLatestOdometer,
+    getLatestValidOdometer,
     createFuelRecord,
 } from "../../../services.js";
 
@@ -176,17 +178,34 @@ export function init() {
 
     async function loadPreviousOdometer() {
         try {
-            const latestOdometerResponse = await getLatestOdometer();
-            const latestOdometer =
-                latestOdometerResponse &&
-                Object.prototype.hasOwnProperty.call(
-                    latestOdometerResponse,
-                    "เลขไมล์ปัจจุบัน"
-                )
-                    ? latestOdometerResponse["เลขไมล์ปัจจุบัน"]
-                    : null;
+            let records = null;
+            let cachedLatestOdometer = null;
 
-            previousOdometer = await getPreviousOdometer(latestOdometer);
+            try {
+                records = await getAllRecords();
+                cachedLatestOdometer = getLatestValidOdometer(records);
+            } catch (error) {
+                console.warn(
+                    "[AddRecord] ใช้ cache ไม่ได้ ตรวจสอบ fallback API:",
+                    error
+                );
+            }
+
+            if (cachedLatestOdometer !== null) {
+                previousOdometer = cachedLatestOdometer;
+            } else {
+                const latestOdometerResponse = await getLatestOdometer();
+                const latestOdometer =
+                    latestOdometerResponse &&
+                    Object.prototype.hasOwnProperty.call(
+                        latestOdometerResponse,
+                        "เลขไมล์ปัจจุบัน"
+                    )
+                        ? latestOdometerResponse["เลขไมล์ปัจจุบัน"]
+                        : null;
+
+                previousOdometer = await getPreviousOdometer(latestOdometer);
+            }
 
             if (previousOdometer === null) {
                 setText(

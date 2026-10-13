@@ -74,6 +74,27 @@ export function getRecordCacheState() {
     };
 }
 
+export function getLatestValidOdometer(records = recordStore.records) {
+    if (!Array.isArray(records)) {
+        return null;
+    }
+
+    for (let index = records.length - 1; index >= 0; index -= 1) {
+        const value = records[index]?.["เลขไมล์ปัจจุบัน"];
+        const odometer = Number(
+            String(value ?? "")
+                .replace(/,/g, "")
+                .replace(/[^\d.-]/g, "")
+        );
+
+        if (Number.isFinite(odometer) && odometer >= 0) {
+            return odometer;
+        }
+    }
+
+    return null;
+}
+
 export async function getLatestOdometer() {
     const response = await fetch(`${API_BASE_URL}/api/records/latest`);
 
