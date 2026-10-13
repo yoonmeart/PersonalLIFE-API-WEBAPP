@@ -1,5 +1,7 @@
 
+import math
 import os
+import re
 from pathlib import Path
 
 import gspread
@@ -40,6 +42,58 @@ def get_all_records():
     """อ่านข้อมูลทั้งหมดจาก Google Sheets"""
     worksheet = get_worksheet()
     return worksheet.get_all_records()
+
+
+def _normalize_odometer(value):
+    """คืนค่าเลขไมล์ที่เป็นตัวเลขที่ถูกต้อง และปฏิเสธค่าเสียหาย/ค่าว่าง"""
+    if value is None:
+        return None
+
+    text = str(value).strip()
+
+    if not text:
+        return None
+
+    cleaned = text.replace(",", "").replace(" ", "")
+
+    if cleaned in {"", "-", ".", "+", "NaN", "None"}:
+        return None
+
+    if not re.fullmatch(r"[-+]?\d+(?:\.\d+)?", cleaned):
+        return None
+
+    number = float(cleaned)
+
+    if not math.isfinite(number) or number < 0:
+        return None
+
+    return int(number) if number.is_integer() else number
+
+
+def get_latest_odometer():
+    """อ่านเฉพาะคอลัมน์เลขไมล์ปัจจุบัน แล้วคืนค่าล่าสุดที่ถูกต้อง"""
+    worksheet = get_worksheet()
+    column_values = worksheet.col_values(4)
+
+    if not column_values:
+        return {"เลขไมล์ปัจจุบัน": None}
+
+    for value in reversed(column_values):
+        normalized_value = str(value).strip().lower()
+
+        if normalized_value in {
+            "เลขไมล์ปัจจุบัน",
+            "current odometer",
+            "odometer",
+        }:
+            continue
+
+        normalized = _normalize_odometer(value)
+
+        if normalized is not None:
+            return {"เลขไมล์ปัจจุบัน": normalized}
+
+    return {"เลขไมล์ปัจจุบัน": None}
 
 
 def get_all_values():

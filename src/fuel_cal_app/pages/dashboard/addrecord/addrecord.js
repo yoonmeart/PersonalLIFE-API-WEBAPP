@@ -1,5 +1,8 @@
 
-import { getAllRecords, createFuelRecord } from "../../../services.js";
+import {
+    getLatestOdometer,
+    createFuelRecord,
+} from "../../../services.js";
 
 import {
     calculateDistance,
@@ -53,10 +56,23 @@ function getOdometer(record) {
     return Number.isFinite(value) ? value : NaN;
 }
 
-async function getPreviousOdometer(records) {
-    // อ่านเลขไมล์จากรายการสุดท้ายใน Sheet ก่อน
-    for (let index = records.length - 1; index >= 0; index -= 1) {
-        const odometer = getOdometer(records[index]);
+async function getPreviousOdometer(valueOrRecords) {
+    // รองรับทั้งกรณีได้รับค่าเลขไมล์ล่าสุดตรงจาก API และกรณีได้รับ array สำหรับข้อมูลเดิม
+    if (
+        typeof valueOrRecords === "number" ||
+        typeof valueOrRecords === "string"
+    ) {
+        const odometer = toNumber(valueOrRecords);
+
+        return Number.isFinite(odometer) && odometer >= 0 ? odometer : null;
+    }
+
+    if (!Array.isArray(valueOrRecords)) {
+        return null;
+    }
+
+    for (let index = valueOrRecords.length - 1; index >= 0; index -= 1) {
+        const odometer = getOdometer(valueOrRecords[index]);
 
         if (Number.isFinite(odometer) && odometer >= 0) {
             return odometer;
@@ -160,13 +176,17 @@ export function init() {
 
     async function loadPreviousOdometer() {
         try {
-            const records = await getAllRecords();
+            const latestOdometerResponse = await getLatestOdometer();
+            const latestOdometer =
+                latestOdometerResponse &&
+                Object.prototype.hasOwnProperty.call(
+                    latestOdometerResponse,
+                    "เลขไมล์ปัจจุบัน"
+                )
+                    ? latestOdometerResponse["เลขไมล์ปัจจุบัน"]
+                    : null;
 
-            if (!Array.isArray(records)) {
-                throw new Error("รูปแบบข้อมูลจาก API ไม่ถูกต้อง");
-            }
-
-            previousOdometer = await getPreviousOdometer(records);
+            previousOdometer = await getPreviousOdometer(latestOdometer);
 
             if (previousOdometer === null) {
                 setText(
