@@ -7,7 +7,7 @@ import {
 import {
     hideLoading,
     withLoading,
-} from "./loading.js";
+} from "../loading.js";
 
 const app = document.querySelector("#app");
 

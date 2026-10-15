@@ -1,13 +1,5 @@
-//app.js
-import {
-    getAllRecords,
-    getRecordCacheState,
-    refreshRecords,
-} from "./services.js";
-import {
-    hideLoading,
-    withLoading,
-} from "./loading.js";
+
+import { withLoading } from "../loading.js";
 
 const app = document.querySelector("#app");
 
@@ -28,16 +20,6 @@ const pages = {
     }
 };
 
-const initialRecordLoad = (async () => {
-    const cacheState = getRecordCacheState();
-
-    if (cacheState.records) {
-        return cacheState.records;
-    }
-
-    return withLoading(getAllRecords(), "กำลังโหลดข้อมูล...");
-})();
-
 export async function loadPage(pageName) {
     const page = pages[pageName];
 
@@ -46,39 +28,44 @@ export async function loadPage(pageName) {
         return;
     }
 
-    try {
-        await initialRecordLoad;
-    } finally {
-        if (getRecordCacheState().records) {
-            hideLoading();
+    return withLoading(async () => {
+        try {
+            const response = await fetch(page.html);
+
+            if (!response.ok) {
+                throw new Error(
+                    `โหลดหน้าไม่สำเร็จ: ${page.html} (${response.status})`
+                );
+            }
+
+            const html = await response.text();
+
+            app.innerHTML = html;
+
+            const module = await page.init();
+
+            if (typeof module.init === "function") {
+                await module.init();
+            }
+        } catch (error) {
+            console.error("[App] เกิดข้อผิดพลาดขณะโหลดหน้า:", error);
+            throw error;
         }
-    }
-
-    const response = await fetch(page.html);
-    const html = await response.text();
-
-    app.innerHTML = html;
-
-    const module = await page.init();
-    module.init();
+    }, "กำลังโหลดหน้า...");
 }
 
-//for navigate
-
+// Navigation
 document.addEventListener("click", (event) => {
     const button = event.target.closest("[data-page]");
+
     if (!button) return;
 
-    const page = button.dataset.page;
-    loadPage(page);
+    loadPage(button.dataset.page).catch(() => {
+        // Error has already been logged in loadPage().
+    });
 });
 
-document.addEventListener("fuel-record:saved", async () => {
-    try {
-        await refreshRecords();
-    } catch (error) {
-        console.error("[App] Refresh cache หลังบันทึกไม่สำเร็จ:", error);
-    }
+// Initial page
+loadPage("recipe").catch(() => {
+    // Error has already been logged in loadPage().
 });
-
-loadPage("dashboard");

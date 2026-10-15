@@ -1,7 +1,11 @@
-const LOADING_ID = "fuel-app-loading";
+const LOADING_ID = "shared-app-loading";
 let loadingCount = 0;
 
 function ensureLoadingScreen() {
+    if (typeof document === "undefined") {
+        return null;
+    }
+
     let overlay = document.getElementById(LOADING_ID);
 
     if (!overlay) {
@@ -15,7 +19,12 @@ function ensureLoadingScreen() {
                 <p data-loading-message class="text-center text-base font-bold tracking-wide text-[#99512F]">กำลังโหลดข้อมูล...</p>
             </div>
         `;
-        document.body.appendChild(overlay);
+
+        const host = document.body || document.documentElement;
+
+        if (host) {
+            host.appendChild(overlay);
+        }
     }
 
     return overlay;
@@ -25,6 +34,11 @@ export function showLoading(message = "กำลังโหลดข้อม�
     loadingCount += 1;
 
     const overlay = ensureLoadingScreen();
+
+    if (!overlay) {
+        return null;
+    }
+
     const messageNode = overlay.querySelector("[data-loading-message]");
 
     if (messageNode) {
@@ -56,8 +70,15 @@ export function hideLoading() {
     }
 }
 
-export function withLoading(promiseFactory, message = "กำลังโหลดข้อมูล...") {
+export function withLoading(task, message = "กำลังโหลดข้อมูล...") {
     showLoading(message);
 
-    return Promise.resolve(promiseFactory).finally(() => hideLoading());
+    try {
+        const operation = typeof task === "function" ? task() : task;
+
+        return Promise.resolve(operation).finally(() => hideLoading());
+    } catch (error) {
+        hideLoading();
+        return Promise.reject(error);
+    }
 }
